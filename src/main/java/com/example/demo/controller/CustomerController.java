@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.CustomerCreateRequest;
 import com.example.demo.dto.CustomerCreateResponse;
+import com.example.demo.dto.CustomerUpdateRequest;
+import com.example.demo.dto.CustomerUpdateResponse;
 import com.example.demo.entity.Customer;
 import com.example.demo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping
-    public ResponseEntity<List<Customer>> getCustomer() {
+    public ResponseEntity<List<Customer>> getCustomers() {
         return ResponseEntity.ok(customerService.getAllCustomers());
     }
 
@@ -39,11 +41,31 @@ public class CustomerController {
         return customerEntity.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
-//        return employeeRepository.findById(id)
-//                .map(employee -> ResponseEntity.ok(employee)) // HTTP 200
-//                .orElse(ResponseEntity.notFound().build());   // HTTP 404
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerUpdateResponse> updateCustomer(@PathVariable UUID id, @RequestBody CustomerUpdateRequest customer) {
+        Optional<Customer> customerEntity = customerService.getCustomerById(id);
 
+        if (customerEntity.isPresent()) {
+            Customer updatedCustomerEntity = customerService.updateCustomer(customerEntity.get(), customer);
+
+            CustomerUpdateResponse customerUpdateResponse = new CustomerUpdateResponse(updatedCustomerEntity);
+
+            return ResponseEntity.ok(customerUpdateResponse);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable UUID id) {
+        Optional<Customer> customerEntity = customerService.getCustomerById(id);
+
+        if (customerEntity.isPresent()) {
+            customerService.deleteCustomer(customerEntity.get());
+
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

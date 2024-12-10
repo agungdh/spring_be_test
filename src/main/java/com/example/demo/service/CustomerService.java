@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.CustomerCreateRequest;
+import com.example.demo.dto.CustomerUpdateRequest;
 import com.example.demo.entity.Customer;
 import com.example.demo.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,17 @@ public class CustomerService {
 
     public Optional<Customer> getCustomerById(UUID id) {
         return customerRepository.findById(id);
+    }
+
+    public Customer updateCustomer(Customer customer, CustomerUpdateRequest customerUpdateRequest) {
+        customer.setName(customerUpdateRequest.getName());
+        customer.setAddress(customerUpdateRequest.getAddress());
+        customer.setBirthday(customerUpdateRequest.getBirthday());
+
+        return customerRepository.save(customer);
+    }
+
+    public void deleteCustomer(Customer customer) {
+        customerRepository.delete(customer);
     }
 }
