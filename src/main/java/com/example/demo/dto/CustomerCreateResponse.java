@@ -1,15 +1,18 @@
 package com.example.demo.dto;
 
 import com.example.demo.entity.Customer;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
 public class CustomerCreateResponse {
     private UUID id;
     private String name;
-    private Date birthday;
+    private LocalDate birthday;
     private String address;
 
     public CustomerCreateResponse(Customer customer) {
@@ -27,7 +30,7 @@ public class CustomerCreateResponse {
         return name;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 

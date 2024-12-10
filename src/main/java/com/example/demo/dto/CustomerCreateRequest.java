@@ -1,15 +1,18 @@
 package com.example.demo.dto;
 
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class CustomerCreateRequest {
     @NotBlank
     private String name;
     @NotBlank
-    private Date birthday;
+    private LocalDate birthday;
     @NotBlank
     private String address;
 
@@ -21,11 +24,11 @@ public class CustomerCreateRequest {
         this.name = name;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

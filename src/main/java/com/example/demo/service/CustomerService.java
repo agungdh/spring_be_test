@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CustomerService {
@@ -18,10 +20,12 @@ public class CustomerService {
     }
 
     public Customer createCustomer(CustomerCreateRequest customerCreateRequest) {
-        Customer customer = new Customer();
-        customer.setName(customerCreateRequest.getName());
-        customer.setAddress(customerCreateRequest.getAddress());
+        Customer customer = new Customer(customerCreateRequest);
 
         return customerRepository.save(customer);
+    }
+
+    public Optional<Customer> getCustomerById(UUID id) {
+        return customerRepository.findById(id);
     }
 }

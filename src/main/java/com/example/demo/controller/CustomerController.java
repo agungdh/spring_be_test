@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -30,12 +32,12 @@ public class CustomerController {
         return ResponseEntity.ok(customerCreateResponse);
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Customer> getCustomer(@PathVariable UUID id) {
-//        return customerRepository.findById(id)
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> getCustomer(@PathVariable UUID id) {
+        Optional<Customer> customerEntity = customerService.getCustomerById(id);
+
+        return customerEntity.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
 
 //    @GetMapping("/{id}")
 //    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {

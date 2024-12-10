@@ -1,9 +1,11 @@
 package com.example.demo.entity;
 
+import com.example.demo.dto.CustomerCreateRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -19,11 +21,21 @@ public class Customer {
 
     @Column(nullable = false)
     @NotBlank
-    private Date birthday;
+    private LocalDate birthday;
 
     @Column(nullable = false)
     @NotBlank
     private String address;
+
+    public Customer() {
+
+    }
+
+    public Customer(CustomerCreateRequest customer) {
+        this.name = customer.getName();
+        this.birthday = customer.getBirthday();
+        this.address = customer.getAddress();
+    }
 
     public UUID getId() {
         return id;
@@ -41,11 +53,11 @@ public class Customer {
         this.name = name;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
