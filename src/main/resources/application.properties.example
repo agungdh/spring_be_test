@@ -1,9 +1,19 @@
 spring.application.name=surimbim
 
-# Database URL and credentials
-spring.datasource.url=jdbc:postgresql://localhost:5432/core
-spring.datasource.username=debian
-spring.datasource.password=debian
+## Database URL and credentials
+#spring.datasource.url=jdbc:postgresql://localhost:5432/core
+#spring.datasource.username=debian
+#spring.datasource.password=debian
+
+# H2 Database configuration (in-memory)
+spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=password
+
+# Enable H2 console for accessing via browser
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
 
 # Hibernate (JPA) settings
 spring.jpa.hibernate.ddl-auto=create
